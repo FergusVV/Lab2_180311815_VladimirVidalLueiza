@@ -1,0 +1,1 @@
+line(ID, Name, RailType, Sections, Line) :- integer(ID), string(Name), string(RailType), Line = line(ID, Name, RailType, Sections).
