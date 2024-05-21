@@ -1,3 +1,5 @@
+
+
 %TDA station
 %Representación: Lista
 %Id (int)
@@ -14,8 +16,20 @@
 %station id (int) X name (String)  X type (stationType) X stopTime X (positive integer)  X station (TDA station)
 %Meta primaria: station/5
 %Metas secundarias:
-station(ID, Name, Type, StopTime, Station) :-
-    Station = [ID, Name, Type, StopTime].
+station(Id, Name, Type, StopTime, Station) :-
+    Station = [Id, Name, Type, StopTime].
 
-% Predicado para verificar si un término es una estación válida
-is_station(Station) :- Station = station(Id, Name, Type, StopTime),integer(Id),string(Name),string(Type),integer(StopTime),StopTime>=0.
+is_station([Id, Name, Type, StopTime]) :-
+    integer(Id),
+    string(Name),
+    string(Type),
+    integer(StopTime),
+    StopTime > 0.    
+
+% Selectores
+get_station_id([Id, _, _, _], Id).
+get_station_name([_, Name, _, _], Name).
+get_station_type([_, _, Type, _], Type).
+get_station_stop_time([_, _, _, StopTime], StopTime).    
+
+
