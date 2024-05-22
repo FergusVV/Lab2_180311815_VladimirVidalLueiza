@@ -4,7 +4,7 @@ line(Id, Name, RailType, Sections, Line) :-
     Line = [Id, Name, RailType, Sections].
 
 % Predicados de pertenencia
-is_line([Id, Name, RailType, Sections]) :-
+isLine([Id, Name, RailType, Sections]) :-
     integer(Id),
     string(Name),
     string(RailType),

@@ -1,35 +1,32 @@
-
-
-%TDA station
+%TDA pcar
 %Representación: Lista
 %Id (int)
-%Name (string)
-%type(string)
-%stopTime (int)
-%station (list of station)
+%Capacity (positive integer)
+%Modele(string)
+%Car-type (type)
+%pcar (list of pcar)
 
 %Reglas
 
-%Predicado constructor station
-% station(Id, Name, Type, StopTime, [Id, Name, Type, StopTime])
+%Predicado constructor pcar
+% pcar(Id, Capacity, Model, Cartype,[Id, Capacity, Model, Cartype])
 % Dominio:
-%station id (int) X name (String)  X type (stationType) X stopTime X (positive integer)  X station (TDA station)
-%Meta primaria: station/5
+%Pcar id (int) X capacity (positive integer) Xmodel (string) X type(car-type)XPCar
+%Meta primaria: pcar/5
 %Metas secundarias:
-station(Id, Name, Type, StopTime, Station) :-
-    Station = [Id, Name, Type, StopTime].
+pcar(Id, Capacity, Model, Cartype, Pcar) :-
+    Pcar = [Id, Capacity, Model, Cartype].
 
-is_station([Id, Name, Type, StopTime]) :-
+% Predicados de pertenencia para PCar
+is_pcar([Id, Capacity, Model, Cartype]) :-
     integer(Id),
-    string(Name),
-    string(Type),
-    integer(StopTime),
-    StopTime > 0.    
+    integer(Capacity),
+    Capacity > 0,
+    string(Model),
+    member(Cartype, ["tr", "ct"]). 
 
 % Selectores
-get_station_id([Id, _, _, _], Id).
-get_station_name([_, Name, _, _], Name).
-get_station_type([_, _, Type, _], Type).
-get_station_stop_time([_, _, _, StopTime], StopTime).    
-
-
+get_pcar_id([Id, _, _, _], Id).
+get_pcar_capacity([_, Capacity, _, _], Capacity).
+get_pcar_model([_, _, Model, _], Model).
+get_pcar_cartype([_, _, _, Cartype], Cartype).

@@ -19,7 +19,7 @@ train(Id, Maker, RailType, Speed, PCars, Train) :-
 
 
 % Predicado de pertenencia para verificar si es un tren válido
-is_train([Id, Maker, RailType, Speed, PCars]) :-
+isTrain([Id, Maker, RailType, Speed, PCars]) :-
     integer(Id),
     string(Maker),
     string(RailType),
@@ -46,3 +46,38 @@ get_train_maker([_, Maker, _, _, _], Maker).
 get_train_railtype([_, _, RailType, _, _], RailType).
 get_train_speed([_, _, _, Speed, _], Speed).
 get_train_pcars([_, _, _, _, PCars], PCars).
+
+
+% Predicado para añadir un carro a un tren en una posición dada
+trainAddCar([Id, Maker, RailType, Speed, PCars], Pcar, Position, [Id, Maker, RailType, Speed, NewPCars]) :-
+    insert(PCars, Pcar, Position, TempPCars),
+   %valid_train(TempPCars),
+    NewPCars = TempPCars.
+
+% Predicado auxiliar
+insert(List, Elem, 0, [Elem|List]).
+insert([H|T], Elem, Pos, [H|R]) :-
+    Pos > 0,
+    Pos1 is Pos - 1,
+    insert(T, Elem, Pos1, R).
+
+
+trainRemoveCar([Id, Maker, RailType, Speed, PCars], Position, [Id, Maker, RailType, Speed, NewPCars]) :-
+    removep(PCars, Position, TPCars),
+    NewPCars = TPCars.
+
+% Elimina un elemento en una posición específica
+removep([_|T], 0, T).
+removep([H|T], Pos, [H|R]) :-
+    Pos > 0,
+    Pos1 is Pos - 1,
+    removep(T, Pos1, R).    
+
+trainCapacity([_, _, _, _, PCars], C) :-
+    calculate_capacity(PCars, C).
+
+calculate_capacity([], 0).
+calculate_capacity([Car|Resto], Total) :-
+    get_pcar_capacity(Car, CarCapacity),
+    calculate_capacity(Resto, Resto2),
+    Total is CarCapacity + Resto2.    
