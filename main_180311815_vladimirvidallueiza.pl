@@ -4,3 +4,5 @@
 :-include(line_180311815_vladimirvidallueiza).
 :-include(pcar_180311815_vladimirvidallueiza).
 :-include(train_180311815_vladimirvidallueiza).
+:-include(driver_180311815_vladimirvidallueiza).
+:-include(subway_180311815_vladimirvidallueiza).

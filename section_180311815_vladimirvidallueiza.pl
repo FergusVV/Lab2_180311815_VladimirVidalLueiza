@@ -23,3 +23,4 @@ get_stations([Section|Sections], Stations) :-
     get_section_point2(Section, Point2),
     get_stations(Sections, RestStations),
     append([Point1, Point2], RestStations, Stations).
+  
