@@ -69,21 +69,16 @@ find_path(Current, Destination, Sections, Visited, Path) :-
     \+ member(Section, Visited),
     find_path(Next, Destination, Sections, [Section|Visited], Path).
 
-lineAddSection(Line, Section, LineOut) :-
-    get_line_sections(Line, Sections), % Obtiene las secciones de la línea
-    (   member(Section, Sections)
-    % Si la sección ya está en las secciones de la línea
-    ->  get_line_id(Line, Id), % Obtiene el ID de la línea
-        get_line_name(Line, Name), % Obtiene el nombre de la línea
-        get_line_railtype(Line, RailType),
-        LineOut = line(Id, Name, RailType, Sections)  % la línea de salida es la misma línea sin cambios
-    ;   add_section(Line, Sections, Section, LineOut)
-    ).
 
-% add_section(Line, Sections, Section, LineOut)
-add_section(Line, Sections, Section, LineOut) :-
-    get_line_id(Line, Id), % Obtiene el ID de la línea
-    get_line_name(Line, Name), % Obtiene el nombre de la línea
-    get_line_railtype(Line, RailType), % Obtiene el tipo de riel de la línea
-    append(Sections, [Section], NSections), % Añade la nueva sección a las secciones existentes
-    LineOut = line(Id, Name, RailType, NSections). % Crea la nueva línea con las secciones actualizadas    
+
+lineAddSection(Line, Section, LineOut) :-
+    get_line_sections(Line, Sections),
+    \+ member(Section, Sections), % Verifica que la sección no esté ya en la línea
+    append(Sections, [Section], UpdatedSections),
+    get_line_id(Line, Id),
+    get_line_name(Line, Name),
+    get_line_railtype(Line, RailType),
+    LineOut = [Id, Name, RailType, UpdatedSections].
+lineAddSection(Line, Section, Line) :- % Si la sección ya está en la línea, no hace cambios
+    get_line_sections(Line, Sections),
+    member(Section, Sections).
