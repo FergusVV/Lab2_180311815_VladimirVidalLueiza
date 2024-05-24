@@ -66,9 +66,9 @@ subwayAddDriver(Subway, NewDrivers, SubwayOut) :-
 % Subout es el string resultante que describe la red de metro
 subwayToString(Subway, Subout) :-
     Subway = [Id, Name, Trains, Lines, Drivers],
-    format(string(TrainsToStr), "~w", [Trains]),
-    format(string(LinesToStr), "~w", [Lines]),
-    format(string(DriversToStr), "~w", [Drivers]),
+    format(string(TrainsToStr), "~w~n", [Trains]),
+    format(string(LinesToStr), "~w~n", [Lines]),
+    format(string(DriversToStr), "~w~n", [Drivers]),
     format(string(Subout), "Subway ID: ~w~nName: ~w~nTrains: ~w~nLines: ~w~nDrivers: ~w", [Id, Name, TrainsToStr, LinesToStr, DriversToStr]).  
 
 
@@ -108,3 +108,23 @@ update_station_stoptime(Station, StationName, NewTime, UpdatedStation) :-
         UpdatedStation = [Id, Name, Type, NewTime]
     ;   UpdatedStation = Station
     ).
+
+
+subwayAssignTrainToLine(Subway, TrainId, LineId, SubwayOut) :-
+    get_subway_id(Subway, Id),
+    get_subway_Name(Subway, Name),
+    get_subway_trains(Subway, Trains),
+    get_subway_lines(Subway, ExistingLines),
+    get_subway_drivers(Subway, Drivers),
+    assign_train_to_line(ExistingLines, TrainId, LineId, UpdatedLines),
+    SubwayOut = [Id, Name, Trains, UpdatedLines, Drivers].
+
+% Predicado auxiliar para asignar un tren a una línea
+assign_train_to_line([], _, _, []).
+assign_train_to_line([Line|RestLines], TrainId, LineId, [UpdatedLine|UpdatedRestLines]) :-
+    (   Line = [LineId, AssignedTrains | Stations]
+    ->  append(AssignedTrains, [TrainId], UpdatedTrains),
+        UpdatedLine = [LineId, UpdatedTrains | Stations]
+    ;   UpdatedLine = Line
+    ),
+    assign_train_to_line(RestLines, TrainId, LineId, UpdatedRestLines).
