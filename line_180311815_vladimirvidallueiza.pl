@@ -73,7 +73,9 @@ unique_station(Station, [Section|Sections]) :-
     Station \= P2,
     unique_station(Station, Sections).
 
-% Predicado lineLength
+% Predicado lineLength : Predicado que permite determinar el largo
+% total de una línea (cantidad de estaciones), la distancia (en la unidad de medida
+% expresada en cada tramo) y su costo.
 % lineLength(Line, Length, Distance, Cost)
 % Dominio:
 % Line (TDA line) X Length (int) X Distance (number) X Cost (number)
@@ -101,6 +103,9 @@ calculate_cost([Section|Sections], Cost) :-
     calculate_cost(Sections, RestCost),
     Cost is C + RestCost. 
 
+
+% lineSectionLength Predicado que permite determinar el trayecto
+% entre una estación origen y una final, la distancia de ese trayecto y el costo. 
 % lineSectionLength(Line, Station1Name, Station2Name, Path, Distance, Cost)
 % Dominio:
 % Line (TDA line) X Station1Name (string) X Station2Name (string) X Path (list of sections) X Distance (number) X Cost (number)
@@ -114,7 +119,15 @@ lineSectionLength(Line, Station1Name, Station2Name, Path, Distance, Cost) :-
     calculate_distance(Path, Distance),
     calculate_cost(Path, Cost).
 
-% Encuentra una estacion por nombre en la base de datos
+% Encuentra el path entre dos estaciones
+% find_path(Current, Destination, Sections, Visited, Path)
+% Dominio:
+% Current (station) X Destination (station) X Sections (list of sections) X Visited (list of sections) X Path (list of sections)
+% Meta primaria: find_path/5
+% find_station_name(Name, Station)
+% Dominio:
+% Name (string) X Station (station)
+% Meta primaria: find_station_name/2
 find_station_name(Name, Station) :-
     station(_, Name, _, _, Station).
 
@@ -128,6 +141,11 @@ find_path(Current, Destination, Sections, Visited, Path) :-
     find_path(Next, Destination, Sections, [Section|Visited], Path).
 
 
+% lineAddSection Predicado que permite añadir tramos a una línea
+% lineAddSection(Line, Section, LineOut)
+% Dominio:
+% Line (TDA line) X Section (section) X LineOut (TDA line)
+% Meta primaria: lineAddSection/3
 
 lineAddSection(Line, Section, LineOut) :-
     get_line_sections(Line, Sections),

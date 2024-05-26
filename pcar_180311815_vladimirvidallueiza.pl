@@ -18,6 +18,13 @@ pcar(Id, Capacity, Model, Cartype, Pcar) :-
     Pcar = [Id, Capacity, Model, Cartype].
 
 % Predicados de pertenencia para PCar
+% is_pcar(Pcar)
+% Dominio:
+% Pcar (TDA pcar)
+% Meta primaria: is_pcar/1
+% Metas secundarias:
+% integer/1, string/1, member/2
+
 is_pcar([Id, Capacity, Model, Cartype]) :-
     integer(Id),
     integer(Capacity),
@@ -26,7 +33,37 @@ is_pcar([Id, Capacity, Model, Cartype]) :-
     member(Cartype, ["tr", "ct"]). 
 
 % Selectores
+
+% get_pcar_id: selecciona el Id del pcar
+% Dominio:
+% Pcar (TDA pcar)
+% Recorrido:
+% Id (int)
+% Meta primaria: get_pcar_id/1
+
 get_pcar_id([Id, _, _, _], Id).
+
+% get_pcar_capacity: selecciona la capacidad del pcar
+% Dominio:
+% Pcar (TDA pcar)
+% Recorrido:
+% Capacity (positive integer)
+% Meta primaria: get_pcar_capacity/1
+
 get_pcar_capacity([_, Capacity, _, _], Capacity).
+
+% get_pcar_model: selecciona el modelo del pcar
+% Dominio:
+% Pcar (TDA pcar)
+% Recorrido:
+% Model (string)
+% Meta primaria: get_pcar_model/1
+
 get_pcar_model([_, _, Model, _], Model).
+
+% get_pcar_cartype: selecciona el tipo de coche del pcar
+% Dominio:
+% Pcar (TDA pcar)
+% Recorrido:
+% Cartype (car-type)
 get_pcar_cartype([_, _, _, Cartype], Cartype).
