@@ -1,9 +1,22 @@
-
+% TDA Line
+% Representación: Lista
 % Constructor
+% line(Id, Name, RailType, Sections, Line)
+% Dominio:
+% Id (int) X Name (string) X RailType (string) X Sections (list of sections) X Line (TDA line)
+% Meta primaria: line/5
+
 line(Id, Name, RailType, Sections, Line) :- 
     Line = [Id, Name, RailType, Sections].
 
 % Predicados de pertenencia
+% isLine(Line)
+% Dominio:
+% Line (TDA line)
+% Meta primaria: isLine/1
+% Metas secundarias:
+% integer/1, string/1, is_list/1, maplist/2, is_section/1
+
 isLine([Id, Name, RailType, Sections]) :-
     integer(Id),
     string(Name),
@@ -12,12 +25,46 @@ isLine([Id, Name, RailType, Sections]) :-
     maplist(is_section, Sections).
 
 % Selectores
+
+% get_line_id: selecciona el Id de la línea
+% Dominio:
+% Line (TDA line)
+% Recorrido:
+% Id (int)
+
 get_line_id([Id, _, _, _], Id).
+
+% get_line_name: selecciona el nombre de la línea
+% Dominio:
+% Line (TDA line)
+% Recorrido:
+% Name (string)
+
 get_line_name([_, Name, _, _], Name).
+
+% get_line_railtype: selecciona el tipo de riel de la línea
+% Dominio:
+% Line (TDA line)
+% Recorrido:
+% RailType (string)
+
 get_line_railtype([_, _, RailType, _], RailType).
+
+% get_line_sections: selecciona las secciones de la línea
+% Dominio:
+% Line (TDA line)
+% Recorrido:
+% Sections (list of sections)
 get_line_sections([_, _, _, Sections], Sections).
 
 % Verifica si una estación es única en una lista de tramos
+% unique_station(Station, Sections)
+% Dominio:
+% Station (station) X Sections (list of sections)
+% Meta primaria: unique_station/2
+% Metas secundarias:
+% get_section_point1/2, get_section_point2/2, (\=)/2
+
 unique_station(_, []).
 unique_station(Station, [Section|Sections]) :-
     get_section_point1(Section, P1),
@@ -26,7 +73,14 @@ unique_station(Station, [Section|Sections]) :-
     Station \= P2,
     unique_station(Station, Sections).
 
-%Predicado lineLength
+% Predicado lineLength
+% lineLength(Line, Length, Distance, Cost)
+% Dominio:
+% Line (TDA line) X Length (int) X Distance (number) X Cost (number)
+% Meta primaria: lineLength/4
+% Metas secundarias:
+% get_line_sections/2, get_line_id/2, get_line_name/2, get_line_railtype/2, get_line_cost
+
 lineLength(Line, Length, Distance, Cost) :-
     get_line_sections(Line, Sections),
     get_stations(Sections, Stations),
@@ -47,6 +101,10 @@ calculate_cost([Section|Sections], Cost) :-
     calculate_cost(Sections, RestCost),
     Cost is C + RestCost. 
 
+% lineSectionLength(Line, Station1Name, Station2Name, Path, Distance, Cost)
+% Dominio:
+% Line (TDA line) X Station1Name (string) X Station2Name (string) X Path (list of sections) X Distance (number) X Cost (number)
+% Meta primaria: lineSectionLength/6
 
 lineSectionLength(Line, Station1Name, Station2Name, Path, Distance, Cost) :-
     get_line_sections(Line, Sections),
@@ -73,7 +131,7 @@ find_path(Current, Destination, Sections, Visited, Path) :-
 
 lineAddSection(Line, Section, LineOut) :-
     get_line_sections(Line, Sections),
-    \+ member(Section, Sections), % Verifica que la sección no esté ya en la línea
+    \+ member(Section, Sections), % Verifica que la sección no este en la línea
     append(Sections, [Section], UpdatedSections),
     get_line_id(Line, Id),
     get_line_name(Line, Name),
