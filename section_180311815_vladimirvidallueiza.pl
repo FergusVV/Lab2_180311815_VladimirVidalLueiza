@@ -1,3 +1,7 @@
+:- module(section_180311815_vladimirvidallueiza, 
+    [section/5, is_section/1, get_section_point1/2, get_section_point2/2, get_section_distance/2, get_section_cost/2, get_stations/2]).
+
+
 % TDA Section
 % Representación: Lista
 % section(Point1, Point2, Distance, Cost, Section)

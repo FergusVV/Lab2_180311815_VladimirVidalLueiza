@@ -1,3 +1,7 @@
+:- module(line_180311815_vladimirvidallueiza, 
+    [line/5, isLine/1, get_line_id/2, get_line_name/2, get_line_railtype/2, get_line_sections/2, 
+     unique_station/2, lineLength/4, lineSectionLength/6, find_station_name/2, find_path/5, lineAddSection/3]).
+
 % TDA Line
 % Representación: Lista
 % Constructor

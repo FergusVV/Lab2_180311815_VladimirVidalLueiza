@@ -54,7 +54,5 @@ subwayAddTrain(Sw0, [T1],Sw1),
 subwayAddTrain(Sw1, [T2,T3,T4],Sw2),
 subwayAddLine(Sw2, [L1],Sw3),
 subwayAddDriver(Sw3, [D0],Sw4),
-subwayAddDriver(Sw4, [D1,D2,D3],Sw5).
+subwayAddDriver(Sw4, [D1,D2,D3],Sw5),
 subwayAssignTrainToLine(Sw5,0,1,Sw7).
-
-

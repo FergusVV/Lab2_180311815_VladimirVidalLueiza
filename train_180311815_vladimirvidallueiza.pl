@@ -1,3 +1,5 @@
+:- module(train_180311815_vladimirvidallueiza, 
+    [train/6, isTrain/1, get_train_id/2, get_train_maker/2, get_train_railtype/2, get_train_speed/2, get_train_pcars/2, trainAddCar/4, trainRemoveCar/3, trainCapacity/2]).
 
 % TDA train
 % Representación: Lista

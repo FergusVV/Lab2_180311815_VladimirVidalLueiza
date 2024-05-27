@@ -1,3 +1,6 @@
+:- module(station_180311815_vladimirvidallueiza, 
+    [station/5, is_station/1, get_station_id/2, get_station_name/2, get_station_type/2, get_station_stop_time/2]).
+
 % TDA Station
 % Representación: Lista
 % Id (int)

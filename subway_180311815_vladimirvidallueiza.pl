@@ -1,3 +1,7 @@
+:- module(subway_180311815_vladimirvidallueiza, 
+    [subway/3, is_subway/1, get_subway_id/2, get_subway_Name/2, get_subway_trains/2, get_subway_lines/2, get_subway_drivers/2,
+     subwayAddTrain/3, subwayAddLine/3, subwayAddDriver/3, update_line_stoptime/4, update_section_stoptime/4, update_station_stoptime/4]).
+
 % TDA subway
 % Representación: Lista
 % Id (int)
@@ -213,4 +217,3 @@ update_station_stoptime(Station, StationName, NewTime, UpdatedStation) :-
         UpdatedStation = [Id, Name, Type, NewTime]
     ;   UpdatedStation = Station
     ).
-

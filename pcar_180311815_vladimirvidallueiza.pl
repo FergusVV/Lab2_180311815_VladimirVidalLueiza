@@ -1,3 +1,6 @@
+:- module(pcar_180311815_vladimirvidallueiza, 
+    [pcar/5, is_pcar/1, get_pcar_id/2, get_pcar_capacity/2, get_pcar_model/2, get_pcar_cartype/2]).
+
 %TDA pcar
 %Representación: Lista
 %Id (int)

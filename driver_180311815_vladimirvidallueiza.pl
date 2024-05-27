@@ -1,3 +1,6 @@
+:- module(driver_180311815_vladimirvidallueiza, 
+    [driver/4, is_driver/1, get_driver_id/2, get_driver_nombre/2, get_driver_train_maker/2]).
+    
 % TDA driver
 % Representación: Lista
 % Id (int)
