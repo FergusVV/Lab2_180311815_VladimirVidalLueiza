@@ -111,6 +111,8 @@ subwayAddLine(Subway, NewLines, SubwayOut) :-
     get_subway_trains(Subway, Trains),
     get_subway_lines(Subway, Lines),
     get_subway_drivers(Subway, Drivers),
+    % Verificar que todas las nuevas líneas sean válidas
+    maplist(isLine, NewLines),
     append(Lines, NewLines, UpdatedLines),
     SubwayOut = [Id, Name, Trains, UpdatedLines, Drivers].
 

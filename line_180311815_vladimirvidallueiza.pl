@@ -21,12 +21,36 @@ line(Id, Name, RailType, Sections, Line) :-
 % Metas secundarias:
 % integer/1, string/1, is_list/1, maplist/2, is_section/1
 
-isLine([Id, Name, RailType, Sections]) :-
+isLine(Line) :-
+    get_line_id(Line, Id),
+    get_line_name(Line, Name),
+    get_line_railtype(Line, RailType),
+    get_line_sections(Line, Sections),
     integer(Id),
     string(Name),
     string(RailType),
     is_list(Sections),
-    maplist(is_section, Sections).
+    Sections \= [],
+    maplist(is_section, Sections),
+    first_and_last_sections(Sections, FirstSection, LastSection),
+    (is_terminal_section(FirstSection); is_terminal_section(LastSection)).
+
+% Predicado para verificar si una sección tiene una estación de tipo "t"
+is_terminal_section(Section) :-
+    get_section_point1(Section, Station),
+    get_station_type(Station, "t").
+is_terminal_section(Section) :-
+    get_section_point2(Section, Station),
+    get_station_type(Station, "t").
+
+% Obtener la primera y última sección de la lista
+first_and_last_sections([First|Rest], First, Last) :-
+    last_section(Rest, Last).
+
+% Obtener la última sección de la lista
+last_section([Last], Last).
+last_section([_|Rest], Last) :-
+    last_section(Rest, Last).
 
 % Selectores
 
