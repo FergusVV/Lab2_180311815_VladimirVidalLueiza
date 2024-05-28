@@ -1,0 +1,73 @@
+% Definición de estaciones
+station(0, "Times Square", "t", 60, NT0),
+station(1, "Grand Central", "c", 55, NT1),
+station(2, "34th Street", "r", 60, NT2),
+station(3, "28th Street", "r", 30, NT3),
+station(4, "23rd Street", "r", 40, NT4),
+station(5, "14th Street", "c", 50, NT5),
+station(6, "West 4th Street", "r", 55, NT6),
+station(7, "Houston Street", "r", 35, NT7),
+station(8, "Canal Street", "m", 3600, NT8),
+station(9, "Brooklyn Bridge", "c", 20, NT9),
+station(10, "Wall Street", "c", 15, NT10),
+station(11, "South Ferry", "t", 25, NT11),
+
+% Definición de secciones
+section(NT0, NT1, 1.5, 30, NS0),
+section(NT1, NT2, 0.8, 20, NS1),
+section(NT2, NT3, 0.6, 15, NS2),
+section(NT3, NT4, 0.5, 10, NS3),
+section(NT4, NT5, 0.7, 20, NS4),
+section(NT5, NT6, 1.0, 25, NS5),
+section(NT6, NT7, 0.8, 20, NS6),
+section(NT7, NT8, 1.2, 40, NS7),
+section(NT8, NT9, 2.0, 50, NS8),
+section(NT9, NT10, 1.5, 35, NS9),
+section(NT10, NT11, 1.2, 30, NS10),
+
+% Definición de líneas
+line(0, "Line 0", "NYC Transit", [], L0),
+line(1, "Line 1", "NYC Transit", [NS0, NS1, NS2, NS3, NS4, NS5, NS6,NS7,NS8,NS9], L1),
+
+% Predicados adicionales
+lineLength(L1, LENGTH, DISTANCE, COST),
+lineSectionLength(L1, "Times Square", "Grand Central", SECCIONES, DISTANCIA, COSTO),
+lineAddSection(L0, NS0, L0_1),
+lineAddSection(L1, NS10, L1_1),
+%isLine(L0), % False porque falta estación terminal
+isLine(L1_1),
+
+% Definición de coches
+pcar(0, 120, "R142", "ct", PC0),
+pcar(1, 140, "R142", "tr", PC1),
+pcar(2, 150, "R160", "tr", PC2),
+pcar(3, 100, "R68", "ct", PC3),
+
+% Definición de trenes
+train(0, "Bombardier", "NYC Transit", 50, [], T0),
+train(1, "Kawasaki", "NYC Transit", 70, [PC1, PC0, PC3, PC2], T1),
+trainAddCar(T0, PC1, 0, T2),
+trainAddCar(T2, PC0, 1, T3),
+trainAddCar(T3, PC2, 2, T4),
+trainAddCar(T4, PC3, 2, T5),
+trainRemoveCar(T5, 1, T52),
+%isTrain(T3), False train inconsistente
+isTrain(T5),
+trainCapacity(T1, C1),
+trainCapacity(T2, C2),
+trainCapacity(T3, C3),
+trainCapacity(T4, C4),
+
+% Definición de conductores
+driver(0, "John Doe", "NYC Transit", D0),
+driver(1, "Jane Smith", "NYC Transit", D1),
+
+% Definición de red de metro
+subway(0, "MetroNY", Sw0),
+subwayAddTrain(Sw0, [T1], Sw1),
+subwayAddTrain(Sw1, [T2, T3, T4], Sw2),
+%subwayAddLine(Sw2, [L0], Sw3),  % False porque la línea es inconsistente
+subwayAddLine(Sw2, [L1_1], Sw3),
+subwayAddDriver(Sw3, [D0], Sw4),
+subwayAddDriver(Sw4, [D1], Sw5),
+subwayToString(Sw5, Sw6).

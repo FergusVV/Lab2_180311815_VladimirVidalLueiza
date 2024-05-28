@@ -1,0 +1,14 @@
+station(1, "Los Heroes", t, 50, E1),
+station(2, "La moneda", r, 30, E2),
+station(3, "Universidad de Chile", t, 30, E3),
+line(1, "L1", “UIC 60 ASCE”, [], L1),
+section(E1, E2, 500, 100, S0),
+section(E2, E3, 550, 100, S1),
+lineAddSection(L1, S0, L1_1),
+lineAddSection(L1_1, S1, L1_2),
+subway(1, "Metro Santiago", Sub0),
+isLine(L1_2),
+% isLine(L1_1), % False porque falta estación terminal
+% subwayAddLine(Sub0, [L1_1], Sub2). % False porque la línea es inconsistente
+subwayAddLine(Sub0, [L1_2], Sub2).
+

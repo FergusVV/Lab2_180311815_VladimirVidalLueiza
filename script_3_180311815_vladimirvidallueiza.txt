@@ -1,0 +1,68 @@
+% Definición de estaciones
+station(0, "King's Cross", "c", 15, ST0),
+station(1, "Baker Street", "c", 20, ST1),
+station(2, "Oxford Circus", "r", 10, ST2),
+station(3, "Piccadilly Circus", "r", 15, ST3),
+station(4, "Charing Cross", "r", 10, ST4),
+station(5, "Waterloo", "c", 25, ST5),
+station(6, "London Bridge", "r", 10, ST6),
+station(7, "Monument", "r", 15, ST7),
+station(8, "Bank", "t", 3600, ST8),
+station(9, "Liverpool Street", "t", 20, ST9),
+station(10, "Aldgate", "r", 15, ST10),
+station(11, "Whitechapel", "t", 20, ST11),
+
+% Definición de secciones
+section(ST0, ST1, 2.0, 40, S0),
+section(ST1, ST2, 1.2, 25, S1),
+section(ST2, ST3, 0.8, 15, S2),
+section(ST3, ST4, 0.7, 10, S3),
+section(ST4, ST5, 1.0, 20, S4),
+section(ST5, ST6, 1.5, 30, S5),
+section(ST6, ST7, 0.9, 20, S6),
+section(ST7, ST8, 1.3, 35, S7),
+
+% Definición de líneas
+line(0, "Line 0", "TFL", [], L0),
+line(1, "Line 1", "TFL", [S0, S1, S2, S3, S4, S5,S6], L1),
+
+% Predicados adicionales
+lineLength(L1, LENGTH, DISTANCE, COST),
+lineSectionLength(L1, "King's Cross", "Baker Street", SECCIONES, DISTANCIA, COSTO),
+lineAddSection(L1, S7, L1_1),
+lineAddSection(L0, S0, L0_1),
+%isLine(L0), % False porque falta estación terminal
+isLine(L1_1),
+
+% Definición de coches
+pcar(0, 100, "1995 Stock", "ct", PC0),
+pcar(1, 110, "1996 Stock", "tr", PC1),
+pcar(2, 120, "2009 Stock", "tr", PC2),
+pcar(3, 90, "1973 Stock", "ct", PC3),
+
+% Definición de trenes
+train(0, "Siemens", "TFL", 55, [], T0),
+train(1, "Bombardier", "TFL", 65, [PC1, PC0, PC3, PC2], T1),
+trainAddCar(T0, PC1, 0, T2),
+trainAddCar(T2, PC0, 1, T3),
+trainAddCar(T3, PC2, 2, T4),
+trainAddCar(T4, PC3, 2, T5),
+trainRemoveCar(T5, 1, T52),
+isTrain(T5),
+trainCapacity(T1, C1),
+trainCapacity(T2, C2),
+trainCapacity(T3, C3),
+trainCapacity(T4, C4),
+
+% Definición de conductores
+driver(0, "Alice Brown", "TFL", D0),
+driver(1, "Bob Johnson", "TFL", D1),
+
+% Definición de red de metro
+subway(0, "Metro London", Sw0),
+subwayAddTrain(Sw0, [T1], Sw1),
+subwayAddTrain(Sw1, [T2, T3, T4], Sw2),
+subwayAddLine(Sw2, [L1_1], Sw3),
+subwayAddDriver(Sw3, [D0], Sw4),
+subwayAddDriver(Sw4, [D1], Sw5),
+subwayToString(Sw5, Sw6).

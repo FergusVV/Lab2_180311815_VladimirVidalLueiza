@@ -1,6 +1,7 @@
 :- module(line_180311815_vladimirvidallueiza, 
     [line/5, isLine/1, get_line_id/2, get_line_name/2, get_line_railtype/2, get_line_sections/2, 
-     unique_station/2, lineLength/4, lineSectionLength/6, find_station_name/2, find_path/5, lineAddSection/3]).
+     unique_station/2, lineLength/4, lineSectionLength/6, find_station_name/2, find_path/5, lineAddSection/3,is_terminal_section/1,
+     first_and_last_sections/3,last_section/2]).
 
 % TDA Line
 % Representación: Lista
@@ -177,12 +178,9 @@ find_path(Current, Destination, Sections, Visited, Path) :-
 
 lineAddSection(Line, Section, LineOut) :-
     get_line_sections(Line, Sections),
-    \+ member(Section, Sections), % Verifica que la sección no este en la línea
+    \+ member(Section, Sections), % Verifica que la sección no esté en la línea
     append(Sections, [Section], UpdatedSections),
     get_line_id(Line, Id),
     get_line_name(Line, Name),
     get_line_railtype(Line, RailType),
     LineOut = [Id, Name, RailType, UpdatedSections].
-lineAddSection(Line, Section, Line) :- % Si la sección ya está en la línea, no hace cambios
-    get_line_sections(Line, Sections),
-    member(Section, Sections).
